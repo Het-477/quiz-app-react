@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function Quiz() {
     const questionBank = [
         {
@@ -15,15 +17,29 @@ function Quiz() {
             options: ["All", "java", "brainFuck", "javascript"],
             answer: "All"
         }
-    ]
+    ];
+
+    // used to change & display the value of selected option
+    const [selectedOption, setSelectedOption] = useState("None");
+
+    function handleSelectOption(option) {
+        // console.log(option)
+        setSelectedOption(option)
+    }
 
     return (<>
         <div>
             <h1>Question 1</h1>
             <p className="question">{questionBank[0].question}</p>
             {questionBank[0].options.map(option => (
-                <button className="option">{option}</button>
+                // `map()` displays all the options 
+                <button className="option"
+                    onClick={() => handleSelectOption(option)}>
+                    {option}</button>
+                // when passing an argument in a function in jsx we need to do `() => func(args...)`
             ))}
+
+            <p>Option selected: {selectedOption}</p>
 
             <div className="nav-buttons">
                 <button>Previous</button>
