@@ -19,31 +19,52 @@ function Quiz() {
         }
     ];
 
-    // used to change & display the value of selected option
-    const [selectedOption, setSelectedOption] = useState("None");
+    const initialAnswers = [null, null, null];
+
+    // setting user's answers 
+    const [userAnswers, setUserAnswer] = useState(initialAnswers);
+    // setting questions 
+    const [currentQuestion, setCurrentQuestion] = useState(0) // '0' cuz question array starts at '0'
+
+    const selectedAnswer = userAnswers[currentQuestion];
 
     function handleSelectOption(option) {
-        // console.log(option)
-        setSelectedOption(option)
+        const newUserAnswers = [...userAnswers];
+        newUserAnswers[currentQuestion] = option;
+
+        setUserAnswer(newUserAnswers);
+    }
+
+    function gotoNextQuestion() {
+        if (currentQuestion <= 3) {
+            setCurrentQuestion(currentQuestion + 1);
+        }
+    }
+
+    function gotoPrevQuestion() {
+        if (currentQuestion > 0) {
+            setCurrentQuestion(currentQuestion - 1);
+        }
     }
 
     return (<>
         <div>
-            <h1>Question 1</h1>
-            <p className="question">{questionBank[0].question}</p>
-            {questionBank[0].options.map(option => (
-                // `map()` displays all the options 
-                <button className="option"
+            <h1>Question {currentQuestion + 1}</h1>
+            <p className="question">{questionBank[currentQuestion].question}</p>
+
+            {questionBank[currentQuestion].options.map(option => (
+                <button className={"option" + (selectedAnswer === option ? " selected" : "")}
                     onClick={() => handleSelectOption(option)}>
                     {option}</button>
                 // when passing an argument in a function in jsx we need to do `() => func(args...)`
             ))}
 
-            <p>Option selected: {selectedOption}</p>
 
             <div className="nav-buttons">
-                <button>Previous</button>
-                <button>Next</button>
+                <button onClick={gotoPrevQuestion} disabled={currentQuestion === 0}>Previous</button>
+                <button onClick={gotoNextQuestion} disabled={!selectedAnswer}>
+                    {currentQuestion === questionBank.length - 1 ? "Finish Quiz" : "Next"}
+                </button>
             </div>
         </div>
     </>)
