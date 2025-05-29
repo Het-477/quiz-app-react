@@ -31,8 +31,14 @@ function Quiz() {
     function handleSelectOption(option) {
         const newUserAnswers = [...userAnswers];
         newUserAnswers[currentQuestion] = option;
+        // Logs 
+        // console.log("crtQuestion: " + currentQuestion)
+        // console.log("option: " + option)
+        // console.log("newusr[crtQuestion]: " + newUserAnswers[currentQuestion])
+        // console.log("newUserans: " + newUserAnswers)
 
         setUserAnswer(newUserAnswers);
+        // console.log("setUserAns: " + setUserAnswer(newUserAnswers))
     }
 
     function gotoNextQuestion() {
