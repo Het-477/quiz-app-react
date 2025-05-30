@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Results from "./results";
 
 function Quiz() {
     const questionBank = [
@@ -24,7 +25,9 @@ function Quiz() {
     // setting user's answers 
     const [userAnswers, setUserAnswer] = useState(initialAnswers);
     // setting questions 
-    const [currentQuestion, setCurrentQuestion] = useState(0) // '0' cuz question array starts at '0'
+    const [currentQuestion, setCurrentQuestion] = useState(0); // '0' cuz question array starts at '0'
+
+    const [isQuizFinished, setIsQuizFinished] = useState(false);
 
     const selectedAnswer = userAnswers[currentQuestion];
 
@@ -42,7 +45,9 @@ function Quiz() {
     }
 
     function gotoNextQuestion() {
-        if (currentQuestion <= 3) {
+        if (currentQuestion === questionBank.length - 1) {
+            setIsQuizFinished(true);
+        } else {
             setCurrentQuestion(currentQuestion + 1);
         }
     }
@@ -51,6 +56,10 @@ function Quiz() {
         if (currentQuestion > 0) {
             setCurrentQuestion(currentQuestion - 1);
         }
+    }
+
+    if (isQuizFinished) {
+        return <Results />
     }
 
     return (<>
