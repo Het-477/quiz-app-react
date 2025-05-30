@@ -1,10 +1,24 @@
-function Results() {
+function Results({ userAnswers, questionBank }) {
+
+    const getFinalScore = () => {
+        let finalScore = 0;
+
+        userAnswers.forEach((answer, index) => {
+            if (answer === questionBank[index].answer) {
+                finalScore++;
+            }
+        });
+        return finalScore;
+    }
+
+    const score = getFinalScore()
+    const numberOfQues = questionBank.length;
 
     return (
         <>
             <div>
                 <h2>Quiz Completed</h2>
-                <p>Your score: 2/3</p>
+                <p className="score">Your score: {score}/{numberOfQues}</p>
                 <button className="restart-button">Restart Quiz</button>
             </div>
         </>

@@ -59,7 +59,7 @@ function Quiz() {
     }
 
     if (isQuizFinished) {
-        return <Results />
+        return <Results userAnswers={userAnswers} questionBank={questionBank}/>
     }
 
     return (<>
